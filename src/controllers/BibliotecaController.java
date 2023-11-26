@@ -1,7 +1,7 @@
 package controllers;
 
 import models.ClienteModel;
-
+import models.FuncionarioModel;
 import models.LivroModel;
 import views.BibliotecaView;
 
@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BibliotecaController {
     private List<ClienteModel> clienteModels;
+    private List <FuncionarioModel> funcionarioModels;
     private List<LivroModel> livros;
     private List<ClienteModel> clientesComLivrosEmprestados;
     private BibliotecaView view;
@@ -25,6 +26,12 @@ public class BibliotecaController {
         int novoId = clienteModels.size() +1;
         ClienteModel novoClienteModel = new ClienteModel(nome, novoId);
         clienteModels.add(novoClienteModel);
+    }
+
+    public void adicionarFuncionario(String nome) {
+        int novoId = funcionarioModels.size() +1;
+        FuncionarioModel novoFuncionarioModel = new FuncionarioModel(nome, novoId);
+        funcionarioModels.add(novoFuncionarioModel);
     }
 
     public void adicionarLivro(String titulo) {
@@ -57,5 +64,9 @@ public class BibliotecaController {
 
     private ClienteModel procurarClientePorId(int id) {
         return clienteModels.stream().filter(clienteModel -> clienteModel.getId() == id).findFirst().orElse(null);
+    }
+
+    private FuncionarioModel procurarFuncionarioPorId(int id) {
+        return funcionarioModels.stream().filter(funcionarioModel -> funcionarioModel.getId() == id).findFirst().orElse(null);
     }
 }
