@@ -3,6 +3,7 @@ package controllers;
 import models.ClienteModel;
 import models.FuncionarioModel;
 import models.LivroModel;
+import models.VisitanteModel;
 import views.BibliotecaView;
 
 import java.util.ArrayList;
@@ -26,6 +27,12 @@ public class BibliotecaController {
         int novoId = clienteModels.size() +1;
         ClienteModel novoClienteModel = new ClienteModel(nome, novoId);
         clienteModels.add(novoClienteModel);
+    }
+
+    public void adicionarVisitante(String nome) {
+        int novoId = visitanteModels.size() +1;
+        VisitanteModel novovisitanteModel = new VisitanteModel(nome, novoId);
+        visitanteModels.add(novoVisitanteModel);
     }
 
     public void adicionarFuncionario(String nome) {
@@ -68,5 +75,40 @@ public class BibliotecaController {
 
     private FuncionarioModel procurarFuncionarioPorId(int id) {
         return funcionarioModels.stream().filter(funcionarioModel -> funcionarioModel.getId() == id).findFirst().orElse(null);
+    }
+
+    public static void main(String[] args) {
+        BibliotecaController bibliotecaController = new BibliotecaController();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Bem-vindo à biblioteca!");
+
+    while (true) {
+                System.out.println("Escolha uma opção:");
+                System.out.println("1. Cadastrar Cliente");
+                System.out.println("2. Cadastrar Visitante");
+                System.out.println("3. Sair");
+
+                int escolha = scanner.nextInt();
+
+                switch (escolha) {
+                    case 1:
+                        System.out.println("Digite o nome do cliente:");
+                        String nomeCliente = scanner.next();
+                        bibliotecaController.adicionarUsuario(nomeCliente);
+                        break;
+                    case 2:
+                        System.out.println("Digite o nome do visitante:");
+                        String nomeVisitante = scanner.next();
+                        bibliotecaController.adicionarVisitante(nomeVisitante);
+                        break;
+                    case 3:
+                        System.out.println("Saindo...");
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Tente novamente.");
+                }
+            }
     }
 }
