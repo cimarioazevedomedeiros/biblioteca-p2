@@ -1,8 +1,8 @@
 package controllers;
 
 import models.ClienteModel;
-
 import models.LivroModel;
+
 import views.BibliotecaView;
 
 import java.util.ArrayList;
@@ -19,6 +19,11 @@ public class BibliotecaController {
         this.livros = new ArrayList<>();
         this.clientesComLivrosEmprestados = new ArrayList<>();
         this.view = new BibliotecaView();
+    }
+
+public class MinhaBibliotecaController extends BibliotecaController {
+    public MinhaBibliotecaController() {
+        super();
     }
 
     public void adicionarCliente(String nome) {
@@ -58,4 +63,18 @@ public class BibliotecaController {
     private ClienteModel procurarClientePorId(int id) {
         return clienteModels.stream().filter(clienteModel -> clienteModel.getId() == id).findFirst().orElse(null);
     }
+
+    public void renovarEmprestimo(int idLivro, int idCliente) {
+        LivroModel livro = procurarLivroPorId(idLivro);
+        ClienteModel clienteModel = procurarClientePorId(idCliente);
+
+        if (livro != null && clienteModel != null && livro.isEmprestado() && clienteModelPossuiLivro(clienteModel, livro)) {
+            System.out.println("Renovação do empréstimo para " + clienteModel.getNome() + ": " + livro.getTitulo());
+        }
+    }
+
+    private boolean clienteModelPossuiLivro(ClienteModel clienteModel, LivroModel livro) {
+        return clienteModel.getLivrosEmprestados().contains(livro);
+    }
+
 }
